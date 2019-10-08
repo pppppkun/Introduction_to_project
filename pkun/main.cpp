@@ -21,6 +21,8 @@ typedef struct Position {
 	int col;        //列
 }Position;
 
+Position pos;
+
 void InitChessBoard() {          //初始化棋盘
 	for (int i = 0; i < N + 1; ++i) {
 		for (int j = 0; j < N + 1; ++j) {
@@ -29,35 +31,35 @@ void InitChessBoard() {          //初始化棋盘
 	}
 }
 
-void PrintChessBoard() 
+void PrintChessBoard()
 {        //打印棋盘
-		printf("     1   2   3   4   5   6   7   8   9  10  11  12  13  14  15\n");
+	printf("     1   2   3   4   5   6   7   8   9  10  11  12  13  14  15\n");
+	printf("   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n");
+	for (int i = 1; i < N + 1; ++i)
+	{
+		printf("%2d ", i);
+		printf("| %c | %c | %c | %c | %c | %c | %c | %c | %c | %c | %c | %c | %c | %c | %c |\n", _ChessBoard[i][1], _ChessBoard[i][2], _ChessBoard[i][3], _ChessBoard[i][4], _ChessBoard[i][5], _ChessBoard[i][6], _ChessBoard[i][7], _ChessBoard[i][8], _ChessBoard[i][9], _ChessBoard[i][10], _ChessBoard[i][11], _ChessBoard[i][12], _ChessBoard[i][13], _ChessBoard[i][14], _ChessBoard[i][15]);
 		printf("   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n");
-		for (int i = 1; i < N + 1; ++i)
-		{
-			printf("%2d ", i);
-			printf("| %c | %c | %c | %c | %c | %c | %c | %c | %c | %c | %c | %c | %c | %c | %c |\n", _ChessBoard[i][1], _ChessBoard[i][2], _ChessBoard[i][3], _ChessBoard[i][4], _ChessBoard[i][5], _ChessBoard[i][6], _ChessBoard[i][7], _ChessBoard[i][8], _ChessBoard[i][9], _ChessBoard[i][10], _ChessBoard[i][11], _ChessBoard[i][12], _ChessBoard[i][13], _ChessBoard[i][14], _ChessBoard[i][15]);
-			printf("   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n");
-		}
-		cout << endl;
+	}
+	cout << endl;
 }
 
-void ComputerChess(Position& pos, char flag)
+void ComputerChess()
 {
 	// TODO
 }
 
-void PlayChess(Position& player)
+void PlayChess()
 {
 	PrintChessBoard();
 	while (1) {
 		printf("It %d turn to input a potision: ", now);
 
-		cin >> player.row >> player.col;
+		cin >> pos.row >> pos.col;
 
-		if (Judgelegal(player) == 1)
+		if (Judgelegal(pos) == 1)
 		{
-			_ChessBoard[player.row][player.col] = flag[now];
+			_ChessBoard[pos.row][pos.col] = flag[now];
 			break;
 		}
 		cout << "Your input is not legal. Please input a new position: ";
@@ -68,19 +70,32 @@ int Judgelegal(const Position& pos)
 {
 	if (pos.row > 0 && pos.row <= N && pos.col > 0 && pos.col <= N) {
 		if (_ChessBoard[pos.row][pos.col] == ChessBoard) {
-			return 1;     
+			return 1;
 		}
 	}
-	return 0;     
+	return 0;
 }
 
-int JudgeVictory(Position pos)
+int JudgeVictory()
 {
 	// TODO
 }
 
 int GetVictory() {
+	int result = JudgeVictory();
+	if (result == 1)
+	{
 
+	}
+	else if (result == 0)
+	{
+
+	}
+	else
+	{
+
+		return 0;
+	}
 }
 
 int ChoiceMode() {           //选择模式
@@ -109,8 +124,7 @@ int ChoiceMode() {           //选择模式
 }
 
 void Play() {
-	Position play1;
-	Position play2;
+	Position pos;
 	int mode = ChoiceMode();
 	while (1)
 	{
@@ -118,14 +132,31 @@ void Play() {
 		{
 			while (1)
 			{
-				ComputerChess(play1);
-				GetVictory();
-
+				now = 1;
+				ComputerChess();
+				if (GetVictory()) {
+					break;
+				}
+				now = 2;
+				PlayChess();
+				if (GetVictory()) 
+				{
+					break;
+				}
 			}
 		}
 		else
 		{
-			while(1)
+			while (1)
+			{
+				PlayChess();
+				if (GetVictory())
+				{
+					break;
+				}
+				if (now == 1) now = 2;
+				else now = 1;
+			}
 		}
 	}
 }
