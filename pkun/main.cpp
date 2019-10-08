@@ -9,59 +9,28 @@
 using namespace std;
 
 const int N = 15;       //15*15的棋盘
-const char ChessBoard = ' '; 
-const char flag1 = '♀';   
-const char flag2 = '♂';  
+const char ChessBoard = ' ';
+const char flag[2] = { 'X','O' };
+int now = 1;
+
+char _ChessBoard[N + 1][N + 1];  //棋盘
+
 
 typedef struct Position {
 	int row;        //行
 	int col;        //列
 }Position;
 
-class GoBang {     //五子棋类
-public:
-	GoBang() {
-		InitChessBoard();      //初始化棋盘
-	}
-	void Play() {
-		//TODO
-	}
-
-protected:
-	void InitChessBoard() {          //初始化棋盘
-		for (int i = 0; i < N + 1; ++i) {
-			for (int j = 0; j < N + 1; ++j) {
-				_ChessBoard[i][j] = ChessBoard;
-			}
+void InitChessBoard() {          //初始化棋盘
+	for (int i = 0; i < N + 1; ++i) {
+		for (int j = 0; j < N + 1; ++j) {
+			_ChessBoard[i][j] = ChessBoard;
 		}
 	}
+}
 
-	int ChoiceMode() {           //选择模式
-		system("cls");
-		//系统调用，清屏
-		InitChessBoard();       //重新初始化棋盘
-		cout << "*************************************************" << endl;
-		cout << "******************0、退出************************" << endl;
-		cout << "******************1、电脑VS玩家******************" << endl;
-		cout << "******************2、玩家VS玩家******************" << endl;
-		cout << "*************************************************" << endl;
-		while (1) {
-			int i = 0;
-			cout << "请选择模式：";
-			cin >> i;
-			if (i == 0) {       //退出
-				exit(1);
-			}
-			if (i == 1 || i == 2) {
-				return i;
-			}
-			else {
-				cout << "非法输入，请重新输入！" << endl;
-			}
-		}
-	}
-
-	void PrintChessBoard() {        //打印棋盘
+void PrintChessBoard() 
+{        //打印棋盘
 		printf("     1   2   3   4   5   6   7   8   9  10  11  12  13  14  15\n");
 		printf("   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n");
 		for (int i = 1; i < N + 1; ++i)
@@ -71,31 +40,101 @@ protected:
 			printf("   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n");
 		}
 		cout << endl;
+}
+
+void ComputerChess(Position& pos, char flag)
+{
+	// TODO
+}
+
+void PlayChess(Position& player)
+{
+	PrintChessBoard();
+	while (1) {
+		printf("It %d turn to input a potision: ", now);
+
+		cin >> player.row >> player.col;
+
+		if (Judgelegal(player) == 1)
+		{
+			_ChessBoard[player.row][player.col] = flag[now];
+			break;
+		}
+		cout << "Your input is not legal. Please input a new position: ";
 	}
+}
 
-	void ComputerChess(Position& pos, char flag) { 
-		// TODO
+int Judgelegal(const Position& pos)
+{
+	if (pos.row > 0 && pos.row <= N && pos.col > 0 && pos.col <= N) {
+		if (_ChessBoard[pos.row][pos.col] == ChessBoard) {
+			return 1;     
+		}
 	}
+	return 0;     
+}
 
-	void PlayChess(Position& pos, int player, char flag) {
-		// TODO
+int JudgeVictory(Position pos)
+{
+	// TODO
+}
+
+int GetVictory() {
+
+}
+
+int ChoiceMode() {           //选择模式
+	system("cls");
+	//系统调用，清屏
+	InitChessBoard();       //重新初始化棋盘
+	cout << "*************************************************" << endl;
+	cout << "******************0、退出************************" << endl;
+	cout << "******************1、电脑VS玩家******************" << endl;
+	cout << "******************2、玩家VS玩家******************" << endl;
+	cout << "*************************************************" << endl;
+	while (1) {
+		int i = 0;
+		cout << "请选择模式：";
+		cin >> i;
+		if (i == 0) {       //退出
+			exit(1);
+		}
+		if (i == 1 || i == 2) {
+			return i;
+		}
+		else {
+			cout << "非法输入，请重新输入！" << endl;
+		}
 	}
+}
 
-	int JudgeValue(const Position& pos) {
-		// TODO
+void Play() {
+	Position play1;
+	Position play2;
+	int mode = ChoiceMode();
+	while (1)
+	{
+		if (mode)
+		{
+			while (1)
+			{
+				ComputerChess(play1);
+				GetVictory();
+
+			}
+		}
+		else
+		{
+			while(1)
+		}
 	}
+}
 
-	int JudgeVictory(Position pos, char flag) {
-		// TODO
-	}
 
-private:
-	char _ChessBoard[N + 1][N + 1];    //棋盘
-};
 
-int main() {
-	GoBang g;
-	g.Play();
+int main()
+{
+	Play();
 	system("pause");
 	return 0;
 }
