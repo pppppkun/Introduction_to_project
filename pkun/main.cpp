@@ -5,13 +5,14 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <map>
 
 using namespace std;
 
-const int N = 15;       //15*15的棋盘
+const int N = 14;       //14*14的棋盘
 const char ChessBoard = ' ';
 const char flag[2] = { 'X','O' };
-int now = 1;
+int now = 0;
 
 char _ChessBoard[N + 1][N + 1];  //棋盘
 
@@ -44,6 +45,16 @@ void PrintChessBoard()
 	cout << endl;
 }
 
+int Judgelegal()
+{
+	if (pos.row > 0 && pos.row <= N && pos.col > 0 && pos.col <= N) {
+		if (_ChessBoard[pos.row][pos.col] == ChessBoard) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
 void ComputerChess()
 {
 	// TODO
@@ -57,7 +68,7 @@ void PlayChess()
 
 		cin >> pos.row >> pos.col;
 
-		if (Judgelegal(pos) == 1)
+		if (Judgelegal())
 		{
 			_ChessBoard[pos.row][pos.col] = flag[now];
 			break;
@@ -66,34 +77,110 @@ void PlayChess()
 	}
 }
 
-int Judgelegal(const Position& pos)
-{
-	if (pos.row > 0 && pos.row <= N && pos.col > 0 && pos.col <= N) {
-		if (_ChessBoard[pos.row][pos.col] == ChessBoard) {
-			return 1;
-		}
-	}
-	return 0;
-}
-
 int JudgeVictory()
 {
-	// TODO
+	int begin = 0;
+	int end = 0;
+
+	//judge row
+
+	(pos.col - 4) > 0 ? begin = (pos.col - 4) : begin = 1;
+	(pos.col + 4) > N ? end = N : end = (pos.col + 4);
+	for (int i = pos.row, j = begin; j + 4 <= end; ++j) {
+		if (_ChessBoard[i][j] == flag[now] && _ChessBoard[i][j + 1] == flag[now] &&
+			_ChessBoard[i][j + 2] == flag[now] && _ChessBoard[i][j + 3] == flag[now] &&
+			_ChessBoard[i][j + 4] == flag[now])
+			return 1;
+	}
+
+	//judge column
+	(pos.row - 4) > 0 ? begin = (pos.row - 4) : begin = 1;
+	(pos.row + 4) > N ? end = N : end = (pos.row + 4);
+	for (int j = pos.col, i = begin; i + 4 <= end; ++i) {
+		if (_ChessBoard[i][j] == flag[now] && _ChessBoard[i + 1][j] == flag[now] &&
+			_ChessBoard[i + 2][j] == flag[now] && _ChessBoard[i + 3][j] == flag[now] &&
+			_ChessBoard[i + 4][j] == flag[now])
+			return 1;
+	}
+	//judge Diagonal
+
+	// pay attention to the increaseand decrease of rowsand columns
+
+	int len = 0;   
+	int start = 0;
+	int finish = 0;
+	pos.row > pos.col ? len = pos.col - 1 : len = pos.row - 1;
+	if (len > 4) {
+		len = 4;
+	}
+	begin = pos.row - len;      
+	start = pos.col - len;       
+
+	pos.row > pos.col ? len = N - pos.row : len = N - pos.col;
+	if (len > 4) {
+		len = 4;
+	}
+	end = pos.row + len;         
+	finish = pos.col + len;      
+
+	for (int i = begin, j = start; (i + 4 <= end) && (j + 4 <= finish); ++i, ++j) {
+		if (_ChessBoard[i][j] == flag[now] && _ChessBoard[i + 1][j + 1] == flag[now] &&
+			_ChessBoard[i + 2][j + 2] == flag[now] && _ChessBoard[i + 3][j + 3] == flag[now] &&
+			_ChessBoard[i + 4][j + 4] == flag[now])
+			return 1;
+	}
+
+	
+
+	(pos.row - 1) > (N - pos.col) ? len = N - pos.col : len = pos.row - 1;
+	if (len > 4) {
+		len = 4;
+	}
+	begin = pos.row - len;       
+	start = pos.col + len;       
+
+	(N - pos.row) > (pos.col - 1) ? len = pos.col - 1 : len = N - pos.row;
+	if (len > 4) {
+		len = 4;
+	}
+
+	end = pos.row + len;         
+	finish = pos.col - len;       
+	for (int i = begin, j = start; (i + 4 <= end) && (j - 4 >= finish); ++i, --j) {
+		if (_ChessBoard[i][j] == flag[now] && _ChessBoard[i + 1][j - 1] == flag[now] &&
+			_ChessBoard[i + 2][j - 2] == flag[now] && _ChessBoard[i + 3][j - 3] == flag[now] &&
+			_ChessBoard[i + 4][j - 4] == flag[now])
+			return 1;
+	}
+
+	//有地可下
+	for (int x = 1; x < N + 1; ++x) {
+		for (int y = 1; y < N + 1; ++y) {
+			if (_ChessBoard[x][y] == ChessBoard) {
+				return 0;
+			}
+		}
+	}
+
+	return -1;//和局
+
 }
 
 int GetVictory() {
 	int result = JudgeVictory();
 	if (result == 1)
 	{
-
+		PrintChessBoard();
+		cout << "Player" << " " << now << " " << "win!" << endl;
+		return 1;
 	}
-	else if (result == 0)
+	else if (result == -1)
 	{
-
+		cout << "No one win" << endl;
+		return 1;
 	}
 	else
 	{
-
 		return 0;
 	}
 }
@@ -128,7 +215,7 @@ void Play() {
 	int mode = ChoiceMode();
 	while (1)
 	{
-		if (mode)
+		if (mode == 1)
 		{
 			while (1)
 			{
@@ -139,7 +226,7 @@ void Play() {
 				}
 				now = 2;
 				PlayChess();
-				if (GetVictory()) 
+				if (GetVictory())
 				{
 					break;
 				}
@@ -154,9 +241,22 @@ void Play() {
 				{
 					break;
 				}
-				if (now == 1) now = 2;
-				else now = 1;
+
+				if (now == 0) now = 1;
+				else now = 0;
 			}
+		}
+		cout << "======再来一局=======" << endl;
+		cout << "yes or no :";
+		char s[] = "yes";
+		cin >> s;
+		if (strcmp(s, "no") == 0)
+		{
+			return;
+		}
+		else
+		{
+			ChoiceMode();
 		}
 	}
 }
