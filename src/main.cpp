@@ -10,8 +10,8 @@ using namespace std;
 
 const int N = 15;       //15*15µƒ∆Â≈Ã
 const char ChessBoard = ' ';
-const char flag1 = 'O';
-const char flag2 = 'X';
+const char flag[2] = { 'X','O' };
+int now = 1;
 char _ChessBoard[N + 1][N + 1];  //∆Â≈Ã
 
 
@@ -20,14 +20,6 @@ typedef struct Position {
 	int col;        //¡–
 }Position;
 
-void Play() {
-	Position play1;
-	Position play2;
-	while (1)
-	{
-		//TODO
-	}
-}
 
 void InitChessBoard() {          //≥ı ºªØ∆Â≈Ã
 	for (int i = 0; i < N + 1; ++i) {
@@ -75,27 +67,37 @@ void PrintChessBoard()
 		cout << endl;
 }
 
-void ComputerChess(Position& pos, char flag)
+void ComputerChess(Position& pos)
 {
-		// TODO
+	// TODO
 }
 
-/*
-
-*/
-void PlayChess(Position& pos, int player, char flag)
+void PlayChess(Position& pos)
 {
-		// TODO
+	// TODO
 }
 
 int Judgelegal(const Position& pos)
 {
-		// TODO
+	// TODO
 }
 
-int JudgeVictory(Position pos, char flag)
+int JudgeVictory(Position pos)
 {
 	// TODO
+}
+
+int GetVictory() {
+	// TODO
+}
+
+void Play() {
+	Position play1;
+	Position play2;
+	while (1)
+	{
+		//TODO
+	}
 }
 
 int main()

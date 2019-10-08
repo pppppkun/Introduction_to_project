@@ -13,7 +13,8 @@
 
 - `N` 棋盘大小
 - `ChessBoard` 空位置的标志
-- `flag1,flag2` 玩家的标志
+- `flag[2]` 玩家的标志
+- `now` 当前轮到谁下棋
 - `InitChessBoard()` 初始化棋盘
 - `ChoiceMode()`选择模式
 - `PrintChessBoard()` 打印棋盘
