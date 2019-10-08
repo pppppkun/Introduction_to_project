@@ -67,22 +67,22 @@ void PrintChessBoard()
 		cout << endl;
 }
 
-void ComputerChess(Position& pos)
+void ComputerChess()
 {
 	// TODO
 }
 
-void PlayChess(Position& pos)
+void PlayChess()
 {
 	// TODO
 }
 
-int Judgelegal(const Position& pos)
+int Judgelegal()
 {
 	// TODO
 }
 
-int JudgeVictory(Position pos)
+int JudgeVictory()
 {
 	// TODO
 }
@@ -92,12 +92,7 @@ int GetVictory() {
 }
 
 void Play() {
-	Position play1;
-	Position play2;
-	while (1)
-	{
-		//TODO
-	}
+	// TODO
 }
 
 int main()

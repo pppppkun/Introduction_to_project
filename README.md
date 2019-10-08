@@ -28,27 +28,27 @@
     - 选择模式
     - 走棋且判断胜负
     - 是否再来一局
-- 完成方法`void PlayChess(Position& pos, int player, char flag)` 该方法要求:
+- 完成方法`void PlayChess()` 该方法要求:
     - 打印棋盘
     - 让玩家能够输入坐标
     - 判断输赢
     - 坐标不合法时需要重新输入
-- 完成方法`int Judgelegal(const Position& pos)` 判断落子合理性:
+- 完成方法`int Judgelegal()` 判断落子合理性:
     - 落子必须在棋盘上
     - 所落子的地方为空
-- 完成方法`int JudgeVictory(Position pos, char flag)`，判断是否有人获胜:
+- 完成方法`int JudgeVictory()`，判断是否有人获胜:
     - 行满足？列满足？对角线满足？
     - 是否平局？
 
 ***以上任务可以在4-5小时内完成***
 
-- 完成方法`void ComputerChess(Position& pos, char flag)`，此方法为本次项目的重点对象，在下文中讲解
+- 完成方法`void ComputerChess()`，此方法为本次项目的重点对象，在下文中讲解
 
 允许大家在coding的时候任意增加新的方法，文件，类，与此同时，如果框架中有你认为***不合理***的地方，可以***自行修改***。
 
 ## ComputerChess
 
-`void ComputerChess(Position& pos, char flag)`方法中，大家需要实现一个比较有智能的AI，具体怎么实现呢？下面给大家介绍几种常用的手段，需要大家自己去学习。
+`void ComputerChess()`方法中，大家需要实现一个比较有智能的AI，具体怎么实现呢？下面给大家介绍几种常用的手段，需要大家自己去学习。
 
 # Don't panic :)
 
