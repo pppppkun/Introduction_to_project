@@ -4,12 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <string.h>
+#include <string>
 #include <map>
+#include "SimpleAI.h"
 
 using namespace std;
 
-const int N = 14;       //14*14的棋盘
+map<string, int> value;
+
+const int N = 15;       //15*15的棋盘
 const char ChessBoard = ' ';
 const char flag[2] = { 'X','O' };
 int now = 0;
@@ -23,6 +26,12 @@ typedef struct Position {
 }Position;
 
 Position pos;
+
+void put(string p, int q)
+{
+	pair<string, int> V(p, q);
+	value.insert(V);
+}
 
 void InitChessBoard() {          //初始化棋盘
 	for (int i = 0; i < N + 1; ++i) {
@@ -73,7 +82,7 @@ void PlayChess()
 			_ChessBoard[pos.row][pos.col] = flag[now];
 			break;
 		}
-		cout << "Your input is not legal. Please input a new position: ";
+		cout << "Your input is not legal. Please input a new position!" << endl;
 	}
 }
 
@@ -106,22 +115,22 @@ int JudgeVictory()
 
 	// pay attention to the increaseand decrease of rowsand columns
 
-	int len = 0;   
+	int len = 0;
 	int start = 0;
 	int finish = 0;
 	pos.row > pos.col ? len = pos.col - 1 : len = pos.row - 1;
 	if (len > 4) {
 		len = 4;
 	}
-	begin = pos.row - len;      
-	start = pos.col - len;       
+	begin = pos.row - len;
+	start = pos.col - len;
 
 	pos.row > pos.col ? len = N - pos.row : len = N - pos.col;
 	if (len > 4) {
 		len = 4;
 	}
-	end = pos.row + len;         
-	finish = pos.col + len;      
+	end = pos.row + len;
+	finish = pos.col + len;
 
 	for (int i = begin, j = start; (i + 4 <= end) && (j + 4 <= finish); ++i, ++j) {
 		if (_ChessBoard[i][j] == flag[now] && _ChessBoard[i + 1][j + 1] == flag[now] &&
@@ -130,22 +139,22 @@ int JudgeVictory()
 			return 1;
 	}
 
-	
+
 
 	(pos.row - 1) > (N - pos.col) ? len = N - pos.col : len = pos.row - 1;
 	if (len > 4) {
 		len = 4;
 	}
-	begin = pos.row - len;       
-	start = pos.col + len;       
+	begin = pos.row - len;
+	start = pos.col + len;
 
 	(N - pos.row) > (pos.col - 1) ? len = pos.col - 1 : len = N - pos.row;
 	if (len > 4) {
 		len = 4;
 	}
 
-	end = pos.row + len;         
-	finish = pos.col - len;       
+	end = pos.row + len;
+	finish = pos.col - len;
 	for (int i = begin, j = start; (i + 4 <= end) && (j - 4 >= finish); ++i, --j) {
 		if (_ChessBoard[i][j] == flag[now] && _ChessBoard[i + 1][j - 1] == flag[now] &&
 			_ChessBoard[i + 2][j - 2] == flag[now] && _ChessBoard[i + 3][j - 3] == flag[now] &&
@@ -230,6 +239,7 @@ void Play() {
 				{
 					break;
 				}
+				system("cls");
 			}
 		}
 		else
@@ -244,6 +254,7 @@ void Play() {
 
 				if (now == 0) now = 1;
 				else now = 0;
+				system("cls");
 			}
 		}
 		cout << "======再来一局=======" << endl;
@@ -260,8 +271,6 @@ void Play() {
 		}
 	}
 }
-
-
 
 int main()
 {
