@@ -1,9 +1,10 @@
 #include<string>
 #include<map>
+#include<string>
 #include<iostream>
 using namespace std;
 
-map<string, int> value;
+map<string, int> Value;
 
 using namespace std;
 
@@ -12,7 +13,7 @@ int weightArray[15][15];
 void put(string p, int q)
 {
 	pair<string, int> V(p, q);
-	value.insert(V);
+	Value.insert(V);
 }
 
 void InitComputer() {
@@ -102,7 +103,14 @@ int unionWeight(int a, int b) {
 	else return 0;
 }
 
-int* MachineDrop(int s[15][15]) {
+int WeightAdd(string connectType, int i, int j) {
+	int value = Value[connectType];
+	if (value != NULL) weightArray[i][j] += value;
+	if (value == NULL) return 0;
+	return value;
+}
+
+int* MachineDrop(const int s[15][15]) {
 
 	//机器落子
 	//先计算出各个位置的权值
@@ -144,7 +152,80 @@ int* MachineDrop(int s[15][15]) {
 	for (int i = 1; i <= 15; i++)
 		for (int j = 1; j <= 15; j++)
 			weightArray[i][j] = 0;
-
-	return new int[] {AIi, AIj};
+	int p[2] = { AIi,AIj };
+	return p;
 }
 
+void LR(const int s[15][15], int X, int Y) {
+	//往左延伸
+	string ConnectType = "0";
+	for (int i = -4; i <= -1; i++) {
+		if (Y + i >= 0 && Y + i <= 14) ConnectType += s[X][Y + i];
+	}
+	int left = WeightAdd(ConnectType, X, Y);
+	ConnectType = "0";
+	for (int i = 1; i <= 4; i++) {
+		if (Y + i >= 0 && Y + i <= 14) ConnectType += s[X][Y + i];
+	}
+	int right = WeightAdd(ConnectType, X, Y);
+
+	weightArray[X][Y] += unionWeight(left, right);
+}
+
+void UD(const int s[15][15], int X, int Y) {
+	string ConnectType = "0";
+	for (int i = -4; i <= -1; i++) {
+		if (X + i >= 0 && X + i <= 14) ConnectType += s[X + i][Y];
+	}
+	int up = WeightAdd(ConnectType, X, Y);
+	ConnectType = "0";
+	for (int i = 1; i <= 4; i++) {
+		if (X + i >= 0 && X + i <= 14) ConnectType += s[X + i][Y];
+	}
+	int down = WeightAdd(ConnectType, X, Y);
+
+	weightArray[X][Y] += unionWeight(up, down);
+}
+
+void Diagonal(const int s[15][15], int X, int Y) {
+
+	string ConnectType = "0";
+
+	//左上
+	for (int i = -4; i <= -1; i++) {
+		if (X + i >= 1 && X + i <= 14
+			&& Y + i >= 0 && Y + i <= 14) ConnectType += s[X + i][Y + i];
+	}
+	int lu = WeightAdd(ConnectType, X, Y);
+
+	ConnectType = "0";
+	//右下
+	for (int i = 1; i <= 4; i++) {
+		if (X + i >= 0 && X + i <= 14
+			&& Y + i >= 0 && Y + i <= 14) ConnectType += s[X + i][Y + i];
+	}
+	int rd = WeightAdd(ConnectType, X, Y);
+
+	weightArray[X][Y] += unionWeight(lu, rd);
+
+
+	ConnectType = "0";
+	//左下
+	for (int i = 1; i <= 4; i++) {
+		if (X - i >= 0 && X - i <= 14
+			&& Y + i >= 0 && Y + i <= 14) ConnectType += s[X - i][Y + i];
+	}
+	int ld = WeightAdd(ConnectType, X, Y);
+
+	ConnectType = "0";
+
+	//右上
+	for (int i = 1; i <= 4; i++) {
+		if (X + i >= 0 && X + i <= 14
+			&& Y - i >= 0 && Y - i <= 14) ConnectType += s[X + i][Y - i];
+	}
+	int ru = WeightAdd(ConnectType, X, Y);
+
+	weightArray[X][Y] += unionWeight(ld, ru);
+
+}

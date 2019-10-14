@@ -66,7 +66,20 @@ int Judgelegal()
 
 void ComputerChess()
 {
-	// TODO
+	// AI = 1;
+	int p[15][15];
+	for (int i = 1; i <= 15; i++)
+	{
+		for (int j = 1; j <= 15; j++)
+		{
+			if (_ChessBoard[i][j] == flag[1]) p[i][j] = 1;
+			if (_ChessBoard[i][j] == flag[2]) p[i][j] = 2;
+			else p[i][j] = 0;
+		}
+	}
+
+	int q[2] = MachineDrop(p);
+
 }
 
 void PlayChess()
