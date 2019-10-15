@@ -1,20 +1,18 @@
 #define _CRT_SECURE_NO_WARNINGS 1
-
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string>
-#include <map>
 #include "SimpleAI.h"
 
 using namespace std;
 
-map<string, int> value;
+
 
 const int N = 15;       //15*15的棋盘
 const char ChessBoard = ' ';
-const char flag[2] = { 'X','O' };
+const char flag[2] = { 'X' , 'O' };
 int now = 0;
 
 char _ChessBoard[N + 1][N + 1];  //棋盘
@@ -26,12 +24,6 @@ typedef struct Position {
 }Position;
 
 Position pos;
-
-void put(string p, int q)
-{
-	pair<string, int> V(p, q);
-	value.insert(V);
-}
 
 void InitChessBoard() {          //初始化棋盘
 	for (int i = 0; i < N + 1; ++i) {
@@ -66,19 +58,25 @@ int Judgelegal()
 
 void ComputerChess()
 {
+	PrintChessBoard();
 	// AI = 1;
 	int p[15][15];
 	for (int i = 1; i <= 15; i++)
 	{
 		for (int j = 1; j <= 15; j++)
 		{
-			if (_ChessBoard[i][j] == flag[1]) p[i][j] = 1;
-			if (_ChessBoard[i][j] == flag[2]) p[i][j] = 2;
-			else p[i][j] = 0;
+			if (_ChessBoard[i][j] == flag[0]) p[i-1][j-1] = 1;
+			else if (_ChessBoard[i][j] == flag[1]) p[i-1][j-1] = 2;
+			else p[i-1][j-1] = 0;
 		}
 	}
 
-	int q[2] = MachineDrop(p);
+	int * q = MachineDrop(p);
+
+	pos.row = q[0];
+	pos.col = q[1];
+
+	_ChessBoard[pos.row][pos.col] = flag[now];
 
 }
 
@@ -233,7 +231,7 @@ int ChoiceMode() {           //选择模式
 }
 
 void Play() {
-	Position pos;
+	
 	int mode = ChoiceMode();
 	while (1)
 	{
@@ -242,14 +240,14 @@ void Play() {
 			while (1)
 			{
 				now = 1;
-				ComputerChess();
-				if (GetVictory()) {
-					break;
-				}
-				now = 2;
 				PlayChess();
 				if (GetVictory())
 				{
+					break;
+				}
+				now = 0;
+				ComputerChess();
+				if (GetVictory()) {
 					break;
 				}
 				system("cls");
@@ -284,6 +282,7 @@ void Play() {
 		}
 	}
 }
+
 
 int main()
 {
