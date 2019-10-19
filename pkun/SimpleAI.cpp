@@ -1,6 +1,6 @@
 #include "SimpleAI.h"
 
-map<string, int> Value ;
+map<string, int> Value;
 
 int weightArray[16][16];
 
@@ -81,17 +81,17 @@ void InitComputer() {
 }
 
 int unionWeight(int a, int b) {
-	//±ØÐëÒªÏÈÅÐ¶Ïa,bÁ½¸öÊýÖµÊÇ²»ÊÇnull
+	//å¿…é¡»è¦å…ˆåˆ¤æ–­a,bä¸¤ä¸ªæ•°å€¼æ˜¯ä¸æ˜¯null
 	if ((a == NULL) || (b == NULL)) return 0;
-	//Ò»Ò»
+	//ä¸€ä¸€
 	else if ((a >= 10) && (a <= 25) && (b >= 10) && (b <= 25)) return 60;
-	//Ò»¶þ¡¢¶þÒ»
+	//ä¸€äºŒã€äºŒä¸€
 	else if (((a >= 10) && (a <= 25) && (b >= 60) && (b <= 80)) || ((a >= 60) && (a <= 80) && (b >= 10) && (b <= 25)))
 		return 800;
-	//Ò»Èý¡¢ÈýÒ»¡¢¶þ¶þ
+	//ä¸€ä¸‰ã€ä¸‰ä¸€ã€äºŒäºŒ
 	else if (((a >= 10) && (a <= 25) && (b >= 140) && (b <= 1000)) || ((a >= 140) && (a <= 1000) && (b >= 10) && (b <= 25)) || ((a >= 60) && (a <= 80) && (b >= 60) && (b <= 80)))
 		return 3000;
-	//¶þÈý¡¢Èý¶þ
+	//äºŒä¸‰ã€ä¸‰äºŒ
 	else if (((a >= 60) && (a <= 80) && (b >= 140) && (b <= 1000)) || ((a >= 140) && (a <= 1000) && (b >= 60) && (b <= 80)))
 		return 3000;
 	else return 0;
@@ -102,20 +102,20 @@ int WeightAdd(string connectType, int i, int j) {
 	j = j + 1;
 	int value = Value[connectType];
 	if (value != NULL) weightArray[i][j] += value;
-	if (value == NULL) return 0;
+ 	if (value == NULL) return 0;
 	return value;
 }
 
-int* MachineDrop(const int s[][15]) {
+int* MachineDrop(const char s[][15]) {
 
 	InitComputer();
-	//»úÆ÷Âä×Ó
-	//ÏÈ¼ÆËã³ö¸÷¸öÎ»ÖÃµÄÈ¨Öµ
+	//æœºå™¨è½å­
+	//å…ˆè®¡ç®—å‡ºå„ä¸ªä½ç½®çš„æƒå€¼
 	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 15; j++) {
-			//Ê×ÏÈÅÐ¶Ïµ±Ç°Î»ÖÃÊÇ·ñÎª¿Õ
-			if (s[i][j] == 0) {
-				//Íù×óÑÓÉì
+			//é¦–å…ˆåˆ¤æ–­å½“å‰ä½ç½®æ˜¯å¦ä¸ºç©º
+			if (s[i][j] == '0') {
+				//å¾€å·¦å»¶ä¼¸
 
 				LR(s, i, j);
 				UD(s, i, j);
@@ -124,7 +124,7 @@ int* MachineDrop(const int s[][15]) {
 			}
 		}
 	}
-	//´òÓ¡³öÈ¨Öµ
+	//æ‰“å°å‡ºæƒå€¼
 	for (int i = 1; i <= 15; i++) {
 		for (int j = 1; j <= 15; j++) {
 			cout << weightArray[i][j] << " ";
@@ -132,7 +132,7 @@ int* MachineDrop(const int s[][15]) {
 		cout << endl;
 	}
 
-	//È¡³ö×î´óµÄÈ¨Öµ
+	//å–å‡ºæœ€å¤§çš„æƒå€¼
 	int AIi = 7, AIj = 7;
 	int weightmax = 0;
 	for (int i = 1; i <= 15; i++) {
@@ -154,8 +154,8 @@ int* MachineDrop(const int s[][15]) {
 }
 
 
-void LR(const int s[][15], int X, int Y) {
-	//Íù×óÑÓÉì
+void LR(const char s[][15], int X, int Y) {
+	//å¾€å·¦å»¶ä¼¸
 	string ConnectType = "0";
 	for (int i = -4; i <= -1; i++) {
 		if (Y + i >= 0 && Y + i <= 14) ConnectType += s[X][Y + i];
@@ -170,7 +170,7 @@ void LR(const int s[][15], int X, int Y) {
 	weightArray[X][Y] += unionWeight(left, right);
 }
 
-void UD(const int s[][15], int X, int Y) {
+void UD(const char s[][15], int X, int Y) {
 	string ConnectType = "0";
 	for (int i = -4; i <= -1; i++) {
 		if (X + i >= 0 && X + i <= 14) ConnectType += s[X + i][Y];
@@ -185,11 +185,11 @@ void UD(const int s[][15], int X, int Y) {
 	weightArray[X][Y] += unionWeight(up, down);
 }
 
-void Diagonal(const int s[][15], int X, int Y) {
+void Diagonal(const char s[][15], int X, int Y) {
 
 	string ConnectType = "0";
 
-	//×óÉÏ
+	//å·¦ä¸Š
 	for (int i = -4; i <= -1; i++) {
 		if (X + i >= 1 && X + i <= 14
 			&& Y + i >= 0 && Y + i <= 14) ConnectType += s[X + i][Y + i];
@@ -197,7 +197,7 @@ void Diagonal(const int s[][15], int X, int Y) {
 	int lu = WeightAdd(ConnectType, X, Y);
 
 	ConnectType = "0";
-	//ÓÒÏÂ
+	//å³ä¸‹
 	for (int i = 1; i <= 4; i++) {
 		if (X + i >= 0 && X + i <= 14
 			&& Y + i >= 0 && Y + i <= 14) ConnectType += s[X + i][Y + i];
@@ -208,7 +208,7 @@ void Diagonal(const int s[][15], int X, int Y) {
 
 
 	ConnectType = "0";
-	//×óÏÂ
+	//å·¦ä¸‹
 	for (int i = 1; i <= 4; i++) {
 		if (X - i >= 0 && X - i <= 14
 			&& Y + i >= 0 && Y + i <= 14) ConnectType += s[X - i][Y + i];
@@ -217,7 +217,7 @@ void Diagonal(const int s[][15], int X, int Y) {
 
 	ConnectType = "0";
 
-	//ÓÒÉÏ
+	//å³ä¸Š
 	for (int i = 1; i <= 4; i++) {
 		if (X + i >= 0 && X + i <= 14
 			&& Y - i >= 0 && Y - i <= 14) ConnectType += s[X + i][Y - i];

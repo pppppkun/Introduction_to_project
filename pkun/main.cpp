@@ -60,18 +60,18 @@ void ComputerChess()
 {
 	PrintChessBoard();
 	// AI = 1;
-	int p[15][15];
+	char p[15][15];
 	for (int i = 1; i <= 15; i++)
 	{
 		for (int j = 1; j <= 15; j++)
 		{
-			if (_ChessBoard[i][j] == flag[0]) p[i-1][j-1] = 1;
-			else if (_ChessBoard[i][j] == flag[1]) p[i-1][j-1] = 2;
-			else p[i-1][j-1] = 0;
+			if (_ChessBoard[i][j] == flag[0]) p[i - 1][j - 1] = '1';
+			else if (_ChessBoard[i][j] == flag[1]) p[i - 1][j - 1] = '2';
+			else p[i - 1][j - 1] = '0';
 		}
 	}
 
-	int * q = MachineDrop(p);
+	int* q = MachineDrop(p);
 
 	pos.row = q[0];
 	pos.col = q[1];
@@ -231,7 +231,7 @@ int ChoiceMode() {           //Ñ¡ÔñÄ£Ê½
 }
 
 void Play() {
-	
+
 	int mode = ChoiceMode();
 	while (1)
 	{

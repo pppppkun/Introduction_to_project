@@ -13,10 +13,10 @@ int unionWeight(int a, int b);
 
 int WeightAdd(string connectType, int i, int j);
 
-int* MachineDrop(const int s[][15]);
+int* MachineDrop(const char s[][15]);
 
-void LR(const int s[][15], int X, int Y);
+void LR(const char s[][15], int X, int Y);
 
-void UD(const int s[][15], int X, int Y);
+void UD(const char s[][15], int X, int Y);
 
-void Diagonal(const int s[][15], int X, int Y);
+void Diagonal(const char s[][15], int X, int Y);
