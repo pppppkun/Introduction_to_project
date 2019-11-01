@@ -10,16 +10,27 @@
 - 人机对战
 
 ## 框架代码说明
+ 
+- main.cpp   
+    - `N` 棋盘大小
+    - `ChessBoard` 空位置的标志
+    - `flag[2]` 玩家的标志
+    - `now` 当前轮到谁下棋
+    - `InitChessBoard()` 初始化棋盘
+    - `ChoiceMode()`选择模式
+    - `PrintChessBoard()` 打印棋盘
+    - `Position` 结构体，存储了最近一次落子的位置
+- simpleAI.h
+    - `put(string p, int q)` 将权值放入map中
+    - `InitComputer()` 初始化AI
+    - `unionWeight(int a, int b)` 联合四个方向的权值
+    - `WeightAdd(string connectType, int i, int j)` 将新计算的权值添加到对应的坐标(i,j)上
+    - `MachineDrop(const char s[][15])` 拿到棋盘，进行计算，并且返回一个骡子地点
+    - `LR(const char s[][15], int X, int Y)` 计算水平方向的权值
+    - `UD(const char s[][15], int X, int Y)` 计算竖直方向的权值
+    - `Diagonal(const char s[][15], int X, int Y)` 计算对角线上的权值
 
-- `N` 棋盘大小
-- `ChessBoard` 空位置的标志
-- `flag[2]` 玩家的标志
-- `now` 当前轮到谁下棋
-- `InitChessBoard()` 初始化棋盘
-- `ChoiceMode()`选择模式
-- `PrintChessBoard()` 打印棋盘
 
-采用了类的设计，但是不影响后续代码的编写和对框架代码的理解，方法具体内容需要大家自己看框架
 
 ## 你的任务
 
@@ -44,11 +55,11 @@
 
 - 完成方法`void ComputerChess()`，此方法为本次项目的重点对象，在下文中讲解
 
-允许大家在coding的时候任意增加新的方法，文件，类，对于我们已经给出的函数，你也可以自行修改，无需被局限在条条框框之中！与此同时，如果框架中有你认为***不合理***的地方，可以***自行修改***。
+允许大家在coding的时候任意增加新的方法，文件，类，对于我们已经给出的函数，你也可以自行修改，无需被局限在条条框框之中！与此同时，如果框架中有你认为 ***不合理*** 的地方，可以 ***自行修改*** 。
 
 ## ComputerChess
 
-`void ComputerChess()`方法中，大家需要实现一个比较有智能的AI，具体怎么实现呢？下面给大家介绍几种常用的手段，需要大家自己去学习。
+`void ComputerChess()`方法中，大家需要实现一个~~比较有智能的~~AI，具体怎么实现呢？下面给大家介绍几种常用的手段，需要大家自己去学习。
 
 # Don't panic :)
 
@@ -152,4 +163,4 @@
 关于集合 $S$ 的元素有哪些，请看仓库中的另一个文件
 
 
-### 项目的周期会比较长，希望大家可以坚持下来，最后可以让不同的同学之间进行对战。
+### 项目的周期会比较长，希望大家可以坚持下来 :-) 最后可以让不同的同学之间进行对战。
