@@ -9,20 +9,20 @@
 
 using namespace std;
 
-const int N = 15;       //15*15������
+const int N = 15;       //15*15的棋盘
 const char ChessBoard = ' ';
 const char flag[2] = { 'X','O' };
 int now = 1;
-char _ChessBoard[N + 1][N + 1];  //����
+char _ChessBoard[N + 1][N + 1];  //棋盘
 
 
 typedef struct Position {
-	int row;        //��
-	int col;        //��
+	int row;        //行
+	int col;        //列
 }Position;
 
 
-void InitChessBoard() {          //��ʼ������
+void InitChessBoard() {          //初始化棋盘
 	for (int i = 0; i < N + 1; ++i) {
 		for (int j = 0; j < N + 1; ++j) {
 			_ChessBoard[i][j] = ChessBoard;
@@ -30,33 +30,33 @@ void InitChessBoard() {          //��ʼ������
 	}
 }
 
-int ChoiceMode() {           //ѡ��ģʽ
+int ChoiceMode() {           //选择模式
 	system("cls");
-	//ϵͳ���ã�����
-	InitChessBoard();       //���³�ʼ������
+	//系统调用，清屏
+	InitChessBoard();       //重新初始化棋盘
 	cout << "*************************************************" << endl;
-	cout << "******************0���˳�************************" << endl;
-	cout << "******************1������VS���******************" << endl;
-	cout << "******************2�����VS���******************" << endl;
+	cout << "******************0、退出************************" << endl;
+	cout << "******************1、电脑VS玩家******************" << endl;
+	cout << "******************2、玩家VS玩家******************" << endl;
 	cout << "*************************************************" << endl;
 	while (1) {
 		int i = 0;
-		cout << "��ѡ��ģʽ��";
+		cout << "请选择模式：";
 		cin >> i;
-		if (i == 0) {       //�˳�
+		if (i == 0) {       //退出
 			exit(1);
 		}
 		if (i == 1 || i == 2) {
 			return i;
 		}
 		else {
-			cout << "�Ƿ����룬���������룡" << endl;
+			cout << "非法输入，请重新输入！" << endl;
 		}
 	}
 }
 
 void PrintChessBoard() 
-{        //��ӡ����
+{        //打印棋盘
 		printf("     1   2   3   4   5   6   7   8   9  10  11  12  13  14  15\n");
 		printf("   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n");
 		for (int i = 1; i < N + 1; ++i)
