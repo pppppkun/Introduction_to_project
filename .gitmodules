@@ -1,0 +1,3 @@
+[submodule "MrChenWIthCapsule/Gomoku"]
+	path = MrChenWIthCapsule/Gomoku
+	url = git@github.com:MrChenWithCapsule/Gomoku.git
